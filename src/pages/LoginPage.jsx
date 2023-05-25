@@ -26,8 +26,6 @@ const LoginPage = () => {
     }
   };
 
-  // 1101821501 446e7c2bc4684c758c210cd2c3641a53c4d4c0e11e27481e94
-
   return (
     <div className={s.wrapper}>
       <form>

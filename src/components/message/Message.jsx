@@ -4,6 +4,7 @@ import { setMessagesTo, setText } from '../../store/features/CreateChatSlice';
 import { sendMessage } from '../../api';
 import s from './Message.module.scss';
 import Chat from '../chat/Chat';
+import { v4 } from 'uuid';
 
 const Message = ({ chat }) => {
   const dispatch = useDispatch();
@@ -14,9 +15,11 @@ const Message = ({ chat }) => {
   console.log(chat);
   const createChat = (e) => {
     e.preventDefault();
-    sendMessage(IdInstance, API, id, text);
-    dispatch(setMessagesTo({ text, id: chat.idMessage }));
-    dispatch(setText(''));
+    if (text) {
+      sendMessage(IdInstance, API, id, text);
+      dispatch(setMessagesTo({ text, id: v4() }));
+      dispatch(setText(''));
+    }
   };
 
   return (
@@ -34,7 +37,7 @@ const Message = ({ chat }) => {
           onChange={(e) => dispatch(setText(e.target.value))}
           placeholder="отправить сообщение"
         />
-        <button onClick={createChat}>send</button>
+        <button onClick={createChat}>отправить</button>
       </div>
     </div>
   );

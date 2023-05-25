@@ -88,14 +88,14 @@ const Menu = ({ not, setNot, checkMes, messages, setMessages, setChat }) => {
       />
       <button onClick={create}>Создать</button>
       <hr />
-      <button onClick={updateNotification}>Обновить</button>
+      <button onClick={updateNotification}>Обновить уведомления</button>
       <hr />
       <h2>Уведомления</h2>
       {not &&
         not.map((n) => (
-          <p onClick={() => delNot(id, n.idMessage)} key={n.idMessage}>
-            {n.sender.chatName}
-          </p>
+          <div className={s.user} onClick={() => delNot(id, n.idMessage)} key={n.idMessage}>
+            <h3>{n.sender.chatName}</h3>
+          </div>
         ))}
     </aside>
   );
