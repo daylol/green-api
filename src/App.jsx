@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import s from './App.module.scss';
-import LoginPage from './pages/LoginPage';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import MainPage from './pages/MainPage';
+import LoginPage from './pages/loginPage/LoginPage';
+import ChatPage from './pages/chatPage/ChatPage';
+import { useSelector } from 'react-redux';
 
 function App() {
   const navigateTo = useNavigate();
@@ -15,7 +16,7 @@ function App() {
     <div className={s.wrapper}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/main" element={<MainPage />} />
+        <Route path="/chat" element={<ChatPage />} />
       </Routes>
     </div>
   );

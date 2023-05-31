@@ -3,8 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   number: '',
   text: '',
-  messagesTo: [],
-  messagesFrom: [],
+  messages: [],
+  id: undefined,
+  notifications: [],
 };
 
 export const CreateChatSlice = createSlice({
@@ -17,15 +18,18 @@ export const CreateChatSlice = createSlice({
     setText: (state, action) => {
       state.text = action.payload;
     },
-    setMessagesTo: (state, action) => {
-      state.messagesTo = [action.payload, ...state.messagesTo];
+    setMessages: (state, action) => {
+      state.messages = action.payload;
     },
-    setMessagesFrom: (state, action) => {
-      state.messagesFrom = [action.payload, ...state.messagesFrom];
+    setId: (state, action) => {
+      state.id = action.payload;
+    },
+    setNotifications: (state, action) => {
+      state.notifications = action.payload;
     },
   },
 });
 
-export const { setNumber, setText, setMessagesTo, setMessagesFrom } = CreateChatSlice.actions;
+export const { setNumber, setText, setMessages, setId, setNotifications } = CreateChatSlice.actions;
 
 export default CreateChatSlice.reducer;

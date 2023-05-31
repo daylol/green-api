@@ -1,24 +1,51 @@
 .main {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 20px 20px 20px 0;
+  width: 70%;
   h2 {
     background-color: #f0f2f5;
     padding: 10px;
   }
-  .send {
+  .chat {
+    overflow-y: auto;
+    background-image: url(https://kalix.club/uploads/posts/2022-12/thumbs/1671533116_kalix-club-p-oboi-dlya-chata-vkontakte-9.jpg);
+    padding: 20px;
+    height: 1000px;
+    display: flex;
+    flex-direction: column-reverse;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .message {
+      background-color: #d9fdd3;
+      margin-top: 10px;
+      padding: 9px;
+      border-radius: 10px;
+      max-width: 500px;
+      word-wrap: break-word;
+    }
+    .recieve {
+      display: flex;
+      justify-content: start;
+    }
+    .send {
+      display: flex;
+      justify-content: end;
+    }
+  }
+  .sendinput {
     width: 500px;
     margin: 0 auto;
     display: flex;
     height: 50px;
     align-items: center;
     margin-top: 10px;
-    input {
+    textarea {
       width: 100%;
-      height: 30px;
+      max-height: 50px;
+      resize: none;
       border-radius: 20px;
-      padding: 0 10px;
+      padding: 5px 10px;
       outline: none;
       margin-right: 10px;
       &:focus {

@@ -1,26 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMessagesTo, setText } from '../../store/features/CreateChatSlice';
-import { sendMessage } from '../../api';
 import s from './Message.module.scss';
-import Chat from '../chat/Chat';
+import { setMessages, setText } from '../../store/features/CreateChatSlice';
+import { sendMessage } from '../../api';
 import { v4 } from 'uuid';
 
 const Message = ({ chat }) => {
-  const dispatch = useDispatch();
+  const { messages } = useSelector((state) => state.create);
+  const { text } = useSelector((state) => state.create);
   const { API, IdInstance } = useSelector((state) => state.user);
-  const { text, number } = useSelector((state) => state.create);
+
+  const [filteredMessage, setFilteredMessage] = useState();
+
+  useEffect(() => {
+    setFilteredMessage(
+      messages.filter(
+        (mes) => mes.userId === chat.sender.chatId && mes.userId === '79196192424@c.us',
+      ),
+    );
+  }, [chat]);
+
+  console.log('chat', chat);
+
+  const dispatch = useDispatch();
   const id = chat.sender.chatId;
-  console.log(id);
-  console.log(chat);
-  const createChat = (e) => {
-    e.preventDefault();
+
+  const onKeyPress = (e) => {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      createChat();
+    }
+  };
+
+  const createChat = () => {
     if (text) {
       sendMessage(IdInstance, API, id, text);
-      dispatch(setMessagesTo({ text, id: v4() }));
+      const mes = { text, userId: '79196192424@c.us', id: v4() };
+      console.log('id', id);
+      dispatch(setMessages([mes, ...messages]));
+      setFilteredMessage([mes, ...filteredMessage]);
       dispatch(setText(''));
     }
   };
+
+  useEffect(() => {
+    setFilteredMessage([...messages]);
+  }, [messages, chat]);
+
+  console.log('messages', messages);
+  console.log('filteredMessage', filteredMessage);
 
   return (
     <div className={s.main}>
@@ -29,10 +57,27 @@ const Message = ({ chat }) => {
       ) : (
         <h2>{chat.sender.chatId.slice(0, 12)}</h2>
       )}
-      <Chat />
-      <div className={s.send}>
-        <input
+
+      <div className={s.chat}>
+        {filteredMessage &&
+          filteredMessage.map(
+            (message) => (
+              console.log(chat.sender.userId, '===', message.userId),
+              (
+                <div
+                  key={message.id}
+                  className={message.userId === '79196192424@c.us' ? `${s.send}` : `${s.recieve}`}>
+                  <p className={s.message}>{message.text}</p>
+                </div>
+              )
+            ),
+          )}
+      </div>
+      <div className={s.sendinput}>
+        <textarea
           type="text"
+          onkey
+          onKeyDown={onKeyPress}
           value={text}
           onChange={(e) => dispatch(setText(e.target.value))}
           placeholder="отправить сообщение"

@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAPI, setIdInstance } from '../store/features/LoginSlice';
+import { setAPI, setIdInstance } from '../../store/features/LoginSlice';
 import s from './LoginPage.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { recieveNot } from '../api';
+import { recieveNot } from '../../api';
 
 const LoginPage = () => {
   const { API, IdInstance } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navTo = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (IdInstance && API) {
       recieveNot(IdInstance, API)
         .then((response) => {
           console.log('recieve', response?.data);
-          navTo('/main');
+          navTo('/chat');
         })
         .catch((error) => {
           alert('Вы не прошли верификацию');
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       alert('Поля должны быть заполнены');
@@ -48,7 +53,7 @@ const LoginPage = () => {
             onChange={(e) => dispatch(setAPI(e.target.value.trim()))}
           />
         </label>
-        <button onClick={handleSubmit}>Войти</button>
+        <button onClick={handleSubmit}>{loading ? 'идет загрузка' : 'войти'}</button>
       </form>
     </div>
   );
