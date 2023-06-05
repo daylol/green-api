@@ -49,7 +49,7 @@ const SideMenu = ({ setChat }) => {
         setShow(true);
         setTimeout(() => {
           setShow(false);
-        }, 30000);
+        }, 15000);
       });
   };
 

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const UserInfo = {
   IdInstance: '',
   API: '',
+  UserNumber: '',
 };
 
 export const LoginSlice = createSlice({
@@ -15,9 +16,12 @@ export const LoginSlice = createSlice({
     setAPI: (state, action) => {
       state.API = action.payload;
     },
+    setUserNumber: (state, action) => {
+      state.UserNumber = action.payload;
+    },
   },
 });
 
-export const { setIdInstance, setAPI } = LoginSlice.actions;
+export const { setIdInstance, setAPI, setUserNumber } = LoginSlice.actions;
 
 export default LoginSlice.reducer;

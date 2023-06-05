@@ -8,14 +8,14 @@ import { v4 } from 'uuid';
 const Message = ({ chat }) => {
   const { messages } = useSelector((state) => state.create);
   const { text } = useSelector((state) => state.create);
-  const { API, IdInstance } = useSelector((state) => state.user);
+  const { API, IdInstance, UserNumber } = useSelector((state) => state.user);
 
   const [filteredMessage, setFilteredMessage] = useState();
 
   useEffect(() => {
     setFilteredMessage(
       messages.filter(
-        (mes) => mes.userId === chat.sender.chatId && mes.userId === '79196192424@c.us',
+        (mes) => mes.userId === chat.sender.chatId && mes.userId === `${UserNumber}@c.us`,
       ),
     );
   }, [chat]);
@@ -35,7 +35,7 @@ const Message = ({ chat }) => {
   const createChat = () => {
     if (text) {
       sendMessage(IdInstance, API, id, text);
-      const mes = { text, userId: '79196192424@c.us', id: v4() };
+      const mes = { text, userId: `${UserNumber}@c.us`, id: v4() };
       console.log('id', id);
       dispatch(setMessages([mes, ...messages]));
       setFilteredMessage([mes, ...filteredMessage]);
@@ -66,7 +66,9 @@ const Message = ({ chat }) => {
               (
                 <div
                   key={message.id}
-                  className={message.userId === '79196192424@c.us' ? `${s.send}` : `${s.recieve}`}>
+                  className={
+                    message.userId === `${UserNumber}@c.us` ? `${s.send}` : `${s.recieve}`
+                  }>
                   <p className={s.message}>{message.text}</p>
                 </div>
               )
